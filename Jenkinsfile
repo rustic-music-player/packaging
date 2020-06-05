@@ -13,6 +13,7 @@ pipeline {
                     agent any
                     steps {
                         copyArtifacts filter: 'rustic-linux-x86_64', projectName: '/rustic/daemon/master', target: 'linux'
+                        fileOperations([fileRenameOperation(source: 'linux/rustic-linux-x86_64', destination: 'linux/rustic')])
                         copyArtifacts filter: 'rustic-web-client.zip', projectName: '/rustic/web-app/master'
                         unzip zipFile: 'rustic-web-client.zip', dir: 'linux/static'
                     }
@@ -27,6 +28,7 @@ pipeline {
                     agent any
                     steps {
                         copyArtifacts filter: 'rustic-win32-x86_64.exe', projectName: '/rustic/daemon/master', target: 'windows'
+                        fileOperations([fileRenameOperation(source: 'windows/rustic-win32-x86_64.exe', destination: 'windows/rustic.exe')])
                         copyArtifacts filter: 'rustic-web-client.zip', projectName: '/rustic/web-app/master'
                         unzip zipFile: 'rustic-web-client.zip', dir: 'windows/static'
                     }
@@ -41,6 +43,7 @@ pipeline {
                     agent any
                     steps {
                         copyArtifacts filter: 'rustic-osx-x86_64', projectName: '/rustic/daemon/master', target: 'macos'
+                        fileOperations([fileRenameOperation(source: 'macos/rustic-osx-x86_64', destination: 'macos/rustic')])
                         copyArtifacts filter: 'rustic-web-client.zip', projectName: '/rustic/web-app/master'
                         unzip zipFile: 'rustic-web-client.zip', dir: 'macos/static'
                     }
