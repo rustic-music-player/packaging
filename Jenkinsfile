@@ -12,8 +12,8 @@ pipeline {
                 stage('Linux') {
                     agent any
                     steps {
-                        copyArtifacts filter: 'rustic-linux-x86_64', projectName: '/rustic/daemon/master', target: 'linux'
-                        fileOperations([fileRenameOperation(source: 'linux/rustic-linux-x86_64', destination: 'linux/rustic')])
+                        copyArtifacts filter: 'linux-x86_64/rustic', flatten: true, projectName: '/rustic/daemon/master', target: 'linux'
+                        copyArtifacts filter: 'linux-x86_64/extensions/*', flatten: true, optional: true, projectName: '/rustic/daemon/master', target: 'linux/extensions'
                         copyArtifacts filter: 'rustic-web-client.zip', projectName: '/rustic/web-app/master'
                         unzip zipFile: 'rustic-web-client.zip', dir: 'linux/static'
                     }
@@ -27,8 +27,8 @@ pipeline {
                 stage('Windows') {
                     agent any
                     steps {
-                        copyArtifacts filter: 'rustic-win32-x86_64.exe', projectName: '/rustic/daemon/master', target: 'windows'
-                        fileOperations([fileRenameOperation(source: 'windows/rustic-win32-x86_64.exe', destination: 'windows/rustic.exe')])
+                        copyArtifacts filter: 'win32-x86_64/rustic.exe', flatten: true, projectName: '/rustic/daemon/master', target: 'windows'
+                        copyArtifacts filter: 'win32-x86_64/extensions/*', flatten: true, optional: true, projectName: '/rustic/daemon/master', target: 'windows/extensions'
                         copyArtifacts filter: 'rustic-web-client.zip', projectName: '/rustic/web-app/master'
                         unzip zipFile: 'rustic-web-client.zip', dir: 'windows/static'
                     }
@@ -42,8 +42,8 @@ pipeline {
                 stage('macOS') {
                     agent any
                     steps {
-                        copyArtifacts filter: 'rustic-osx-x86_64', projectName: '/rustic/daemon/master', target: 'macos'
-                        fileOperations([fileRenameOperation(source: 'macos/rustic-osx-x86_64', destination: 'macos/rustic')])
+                        copyArtifacts filter: 'osx-x86_64/rustic', flatten: true, projectName: '/rustic/daemon/master', target: 'macos'
+                        copyArtifacts filter: 'osx-x86_64/extensions/*', flatten: true, optional: true, projectName: '/rustic/daemon/master', target: 'macos/extensions'
                         copyArtifacts filter: 'rustic-web-client.zip', projectName: '/rustic/web-app/master'
                         unzip zipFile: 'rustic-web-client.zip', dir: 'macos/static'
                     }
